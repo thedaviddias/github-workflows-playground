@@ -8,7 +8,8 @@ runs:
         uses: actions/checkout@v3
 
       - name: Detect Node version
-        run: echo "$(cat .nvmrc)" >> $GITHUB_OUTPUT
+        run: echo "version=$(cat .nvmrc)" >> $GITHUB_OUTPUT
+        # run: echo "##[set-output name=version;]$(cat .nvmrc)"
         id: nvmrc
         shell: bash
 
