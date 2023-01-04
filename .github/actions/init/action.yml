@@ -1,0 +1,18 @@
+name: 'Init'
+description: 'Initialize the environment'
+
+runs:
+  using: 'composite'
+  steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+
+      - name: Detect Node version
+        run: echo "$(cat .nvmrc)" >> $GITHUB_OUTPUT
+        id: nvmrc
+        shell: bash
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '${{ steps.nvmrc.outputs.version }}'

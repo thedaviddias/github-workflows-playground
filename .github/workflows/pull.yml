@@ -1,0 +1,33 @@
+name: '  ▶️  Pull'
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+      - converted_to_draft
+
+concurrency:
+  group: pull-${{ github.ref }}-1
+  cancel-in-progress: true
+
+jobs:
+  pull:
+    name: CI
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: pull-checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Init
+        id: push-init
+        uses: ./.github/actions/init
